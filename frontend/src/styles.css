@@ -1,0 +1,149 @@
+/* ------------------------------------------------------------------
+   Truth-Seeker — "forensic bench" design tokens
+   Palette: slate steel surfaces, evidence amber, authentic teal.
+------------------------------------------------------------------- */
+:root {
+  --bg: #14181f;
+  --panel: #1c222c;
+  --panel-2: #222a36;
+  --line: #2d3644;
+  --ink: #e9ecf2;
+  --muted: #8c96a8;
+  --amber: #f2a33c;      /* flagged / manipulated evidence */
+  --amber-dim: #f2a33c33;
+  --teal: #46c2a5;       /* authentic / verified */
+  --teal-dim: #46c2a533;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+
+/* --- Header ------------------------------------------------------ */
+.masthead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 28px;
+}
+.masthead h1 {
+  font-size: 22px; font-weight: 700; letter-spacing: 0.04em;
+}
+.masthead h1 .tick { color: var(--amber); }
+.masthead .sub {
+  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+}
+.badge {
+  font-family: var(--font-mono); font-size: 11px; padding: 4px 10px;
+  border: 1px solid var(--line); border-radius: 999px; color: var(--muted);
+}
+.badge.warn { border-color: var(--amber); color: var(--amber); }
+
+/* --- Layout ------------------------------------------------------ */
+.grid { display: grid; grid-template-columns: 380px 1fr; gap: 24px; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 20px;
+}
+.panel h2 {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+}
+
+/* --- Uploader ---------------------------------------------------- */
+.dropzone {
+  border: 1.5px dashed var(--line); border-radius: 10px;
+  padding: 36px 20px; text-align: center; cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dropzone:hover, .dropzone.drag { border-color: var(--amber); background: var(--panel-2); }
+.dropzone:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.dropzone p { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.dropzone strong { font-weight: 500; }
+
+.preview { width: 100%; border-radius: 8px; margin-top: 14px; display: block; }
+
+.btn {
+  width: 100%; margin-top: 14px; padding: 12px;
+  font-family: var(--font-display); font-size: 15px; font-weight: 500;
+  color: #14181f; background: var(--amber); border: none; border-radius: 8px;
+  cursor: pointer; transition: filter 0.15s;
+}
+.btn:hover:not(:disabled) { filter: brightness(1.08); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.status { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 12px; }
+.status.error { color: var(--amber); }
+
+/* Analysis progress pulse */
+.pulse-track { height: 3px; background: var(--line); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+.pulse { height: 100%; width: 30%; background: var(--amber); border-radius: 2px; animation: sweep 1.2s ease-in-out infinite; }
+@keyframes sweep { 0% { margin-left: -30%; } 100% { margin-left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .pulse { animation: none; width: 100%; } }
+
+/* --- Verdict ----------------------------------------------------- */
+.verdict { display: flex; align-items: center; gap: 20px; }
+.verdict .stamp {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 500;
+  letter-spacing: 0.18em; padding: 10px 18px; border-radius: 6px;
+  border: 1.5px solid; transform: rotate(-2deg);
+}
+.stamp.fake { color: var(--amber); border-color: var(--amber); background: var(--amber-dim); }
+.stamp.real { color: var(--teal); border-color: var(--teal); background: var(--teal-dim); }
+
+.verdict .prob { font-size: 34px; font-weight: 700; font-family: var(--font-mono); }
+.verdict .prob small { font-size: 12px; color: var(--muted); display: block; font-weight: 400; }
+
+.meta-row {
+  display: flex; gap: 22px; margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid var(--line); flex-wrap: wrap;
+}
+.meta-row div { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.meta-row b { color: var(--ink); font-weight: 500; display: block; font-size: 14px; }
+
+.detector-breakdown {
+  display: flex; gap: 22px; margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.detector-breakdown div { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.detector-breakdown b { color: var(--ink); font-weight: 600; display: block; font-size: 18px; }
+
+.untrained-note {
+  margin-top: 14px; padding: 10px 12px; border: 1px solid var(--amber);
+  border-radius: 8px; color: var(--amber); font-size: 13px;
+}
+
+.summary { margin-top: 14px; color: var(--ink); font-size: 14px; }
+
+/* --- Seismograph (signature element) ------------------------------ */
+.seismo svg { width: 100%; height: auto; display: block; }
+.seismo .axis-label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  display: flex; justify-content: space-between; margin-top: 6px;
+}
+
+/* --- Evidence gallery --------------------------------------------- */
+.frames { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.frame-card img { width: 100%; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.frame-card figcaption {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 5px;
+}
+
+.spectra { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .spectra { grid-template-columns: 1fr; } }
+.spectra img { width: 100%; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.caption { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+
+.stack > * + * { margin-top: 24px; }

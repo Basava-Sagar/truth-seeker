@@ -1,0 +1,27 @@
+# --- Core ML ---
+torch>=2.2.0
+torchvision>=0.17.0
+
+# --- Audio ---
+librosa>=0.10.1
+soundfile>=0.12.1
+
+# --- Video / vision ---
+opencv-python-headless>=4.9.0
+mediapipe>=0.10.20  # Tasks API (FaceLandmarker) — legacy mp.solutions was removed from newer wheels
+numpy>=1.26.0
+
+# --- Backend (Phase 4) ---
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9
+
+# --- Explainability (Phase 3) ---
+matplotlib>=3.8.0
+Pillow>=10.0.0  # gradcam_visual.py's PNG encoding (torchvision usually pulls
+                # this in transitively, but the visual-model heatmap code
+                # imports it directly, so it's pinned explicitly too)
+
+# NOTE: ffmpeg must be installed at the system level:
+#   Ubuntu/Debian: sudo apt-get install ffmpeg
+#   macOS:         brew install ffmpeg

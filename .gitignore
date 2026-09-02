@@ -1,0 +1,52 @@
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- Node / frontend build ---
+node_modules/
+frontend/dist/
+
+# --- Datasets: NEVER commit these. Large, and FakeAVCeleb/DFDC both have
+# redistribution restrictions -- link to the official sources in README
+# instead of shipping the data itself. ---
+FakeAVCeleb_v1.2/
+DFDC_sample/
+**/FakeAVCeleb_v1.2/
+**/DFDC_sample/
+
+# --- Caches: multi-GB, machine-specific, regenerable from the datasets
+# above via dataset.py / dataset_visual.py -- never commit. ---
+cache/
+cache_visual/
+cache_dfdc_visual/
+**/cache_visual/
+**/cache_dfdc_visual/
+*.npz
+
+# --- Training artifacts tied to a specific local run (absolute paths on
+# your machine, meaningless to anyone else who clones this repo) ---
+holdout_manifest.json
+failures_visual.json
+dfdc_eval_result*.json
+gradcam_result*.json
+
+# --- Debug/scratch scripts and their outputs (not part of the shipped app) ---
+debug_*.py
+debug_variant_*.png
+debug_original_frame.png
+debug_enhanced_frame.png
+
+# --- Env / secrets ---
+.env
+.env.local
+
+# --- OS noise ---
+.DS_Store
+Thumbs.db
+
+# Model checkpoints are DELIBERATELY NOT ignored here -- see .gitattributes,
+# they're tracked via Git LFS instead so the deployed app actually has
+# trained weights to load.
