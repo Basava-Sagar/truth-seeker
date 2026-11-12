@@ -147,6 +147,19 @@ def explain_visual(video_path: str | Path, n_frames: int = VISUAL_N_FRAMES) -> d
     }
 
 
+def _load_fusion_threshold(default: float = 0.7) -> float:
+    """Cutoff written by calibrate_threshold.py; falls back to 0.5 if absent."""
+    import json
+    f = Path(__file__).resolve().parent.parent / "fusion_threshold.json"
+    try:
+        return float(json.loads(f.read_text())["threshold"])
+    except Exception:
+        return default
+
+
+FUSION_THRESHOLD = _load_fusion_threshold()
+
+
 def fuse_scores(p_lipsync: float, p_visual: float | None,
                 method: str = "weighted", weight: float = 0.5) -> float:
     """
@@ -198,7 +211,8 @@ def analyze_video_fused(video_path: str | Path, method: str = "weighted",
         "visual_heatmap_b64": visual["heatmap_b64"] if visual else None,
         "visual_heatmap_time": visual["frame_time"] if visual else None,
         "fused_probability": p_fused,
-        "fused_verdict": "fake" if p_fused >= 0.5 else "real",
+        "fused_verdict": "fake" if p_fused >= FUSION_THRESHOLD else "real",
+        "fusion_threshold": FUSION_THRESHOLD,
         "fusion_method": method,
         "fusion_weight": weight if method == "weighted" else None,
     }
